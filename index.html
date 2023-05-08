@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RelPose++</title>
+    <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+    <script type="text/javascript">google.load("jquery", "1.3.2");</script>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.3/dist/css/bulma-carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="./resources/style.css" />
+    <meta property="og:image" content="https://amyxlase.github.io/relpose-plus-plus/resources/teddybear.gif" />
+    <meta property="og:image:type" content="image/gif" />
+    <meta property="og:image:width" content="320" />
+    <meta property="og:image:height" content="195" />
+    <meta property="og:title" content="RelPose++: Recovering 6D Poses from Sparse-view Observations" />
+    <meta property="og:description" content="We recover 6D cameras poses for generic objects from just 2-8 images." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TQ5ZZP2G87"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-TQ5ZZP2G87');
+    </script>
+</head>
+
+
+<body>
+    <!-- <section class="section"> -->
+    <div class="full-container">
+
+        <div class="title">
+            RelPose++: Recovering 6D Poses from Sparse-view Observations
+        </div>
+
+        <br>
+
+        <div class="author">
+            <a href="">Amy Lin</a><sup>*</sup>
+        </div>
+        <div class="author">
+            <a href="https://jasonyzhang.com/">Jason Y. Zhang</a><sup>*</sup>
+        </div>
+        <div class="author">
+            <a href="https://www.cs.cmu.edu/~deva/">Deva Ramanan</a>
+        </div>
+        <div class="author">
+            <a href="http://shubhtuls.github.io/">Shubham Tulsiani</a>
+        </div>
+
+        <br>
+        <br>
+
+        <div class="affiliation">Carnegie Mellon University</div>
+
+        <br>
+        <br>
+
+        <div class="links"><a href="">[Paper]</a></div>
+        <div class="links"><a href="https://www.youtube.com/watch?v=nd3NRyemyF0">[Video]</a></div>
+        <div class="links"><a href="https://github.com/amyxlase/relpose-plus-plus">[Code]</a></div>
+
+        <br>
+        <br>
+        <br>
+        <table>
+            <tr>
+                <td width="60%" style="border-right: solid 2px rgb(0, 0, 0);">
+                    <a href="https://github.com/amyxlase/relpose-plus-plus">
+                        <img style="width:95%;" src="./resources/overview_sans.jpg" alt="Model overview figure" />
+                    </a>
+                </td>
+                <td width="30%">
+                    <p style="font-size: large;">Recovered Cameras</p>
+                    <video autoplay loop muted playsinline width="100%">
+                        <source src="./resources/turntable_teddybear_crop.mp4" type="video/mp4">
+                    </video>
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="square" style="margin: auto;"></div>
+                            </td>
+                            <td> Predicted Cameras</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="square" style="border-color:black; position: relative;"></div>
+                            </td>
+                            <td> Ground Truth Cameras</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <i>
+            <strong>Estimating 6D Camera Poses from Sparse Views.</strong> RelPose++ extracts per-image features
+            (with positionally encoded image index and bounding box parameters) and jointly processes these
+            features using a Transformer.
+            We used an energy-based framework to recover coherent sets of camera rotations by using a
+            score-predictor for pairs of relative rotations.
+            RelPose++ also predicts camera translations by defining an appropriate coordinate system
+            that decouples the ambiguity in rotation estimation from translation prediction.
+            Altogether, RelPose++ is able to predict accurate 6D camera poses from 2-8 images.
+        </i>
+
+        <br><br>
+        <hr>
+
+        <h1> Self-Captured Data</h1>
+
+        <br>
+        <div class="container">
+            <div id="carousel-demo2" class="carousel">
+                <div class="item-1">
+                    <table width="400px" class="border">
+                        <tr>
+                            <td>
+                                <video autoplay loop muted playsinline controls width="100%">
+                                    <source src="resources/self_captures_cropped/_espresso_15.mp4" type="video/mp4">
+                                </video>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="resources/self_captures_cropped/_espresso.jpg" width="100%"></img>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                <div class="item-2">
+                    <table width="400px" class="border">
+                        <tr>
+                            <td>
+                                <video autoplay loop muted playsinline controls width="100%">
+                                    <source src="resources/self_captures_cropped/_gandalf_10.mp4" type="video/mp4">
+                                </video>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="resources/self_captures_cropped/_gandalf.jpg" width="100%"></img>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                <div class="item-3">
+                    <table width="400px" class="border">
+                        <tr>
+                            <td>
+                                <video autoplay loop muted playsinline controls width="100%">
+                                    <source src="resources/self_captures_cropped/_guy_15.mp4" type="video/mp4">
+                                </video>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="resources/self_captures_cropped/_guy.jpg" width="100%"></img>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                <div class="item-4">
+                    <table width="400px" class="border">
+                        <tr>
+                            <td>
+                                <video autoplay loop muted playsinline controls width="100%">
+                                    <source src="resources/self_captures_cropped/controller_10.mp4" type="video/mp4">
+                                </video>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="resources/self_captures_cropped/controller.jpg" width="100%"></img>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                <div class="item-5">
+                    <table width="400px" class="border">
+                        <tr>
+                            <td>
+                                <video autoplay loop muted playsinline controls width="100%">
+                                    <source src="resources/self_captures_cropped/football_15.mp4" type="video/mp4">
+                                </video>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="resources/self_captures_cropped/football.jpg" width="100%"></img>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                <div class="item-6">
+                    <table width="400px" class="border">
+                        <tr>
+                            <td>
+                                <video autoplay loop muted playsinline controls width="100%">
+                                    <source src="resources/self_captures_cropped/grogu_10.mp4" type="video/mp4">
+                                </video>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="resources/self_captures_cropped/grogu.jpg" width="100%"></img>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                <div class="item-7">
+                    <table width="400px" class="border">
+                        <tr>
+                            <td>
+                                <video autoplay loop muted playsinline controls width="100%">
+                                    <source src="resources/self_captures_cropped/scooter.mp4" type="video/mp4">
+                                </video>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="resources/self_captures_cropped/scooter.jpg" width="100%"></img>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- End Carousel -->
+            </div>
+
+            <br>
+
+            <hr>
+
+            <h1>Abstract</h1>
+            <p>
+                We address the task of estimating 6D camera poses from
+                sparse-view image sets (2-8 images). This task is a vital
+                pre-processing stage for nearly all contemporary (neural)
+                reconstruction algorithms but remains challenging given
+                sparse views, especially for objects with visual symmetries
+                and texture-less surfaces. We build on the recent RelPose
+                framework which learns a network that infers distributions
+                over relative rotations over image pairs. We extend this approach
+                in two key ways; first, we use attentional transformer
+                layers to process multiple images jointly, since additional
+                views of an object may resolve ambiguous symmetries in
+                any given image pair (such as the handle of a mug that becomes
+                visible in a third view). Second, we augment this
+                network to also report camera translations by defining an
+                appropriate coordinate system that decouples the ambiguity
+                in rotation estimation from translation prediction. Our final
+                system results in large improvements in 6D pose prediction
+                over prior art on both seen and unseen object categories
+                and also enables pose estimation and 3D reconstruction for
+                in-the-wild objects.
+            </p>
+
+            <br><br>
+            <hr>
+
+            <h1>Paper</h1>
+
+            <div class="paper-thumbnail">
+                <a href="https://arxiv.org">
+                    <img class="layered-paper-big" width="100%" src="./resources/paper_preview_small.jpg"
+                        alt="Paper thumbnail." />
+                </a>
+            </div>
+            <div class="paper-info">
+                <h4>RelPose++: Recovering 6D Poses from Sparse-view Observations</h4>
+                <h5>
+                    Amy Lin*, Jason Y. Zhang*, Deva Ramanan, and Shubham Tulsiani
+                </h5>
+                <pre><code>@article{lin2023relposepp,
+    title={RelPose++: Recovering 6D Poses from Sparse-view Observations},
+    author={Lin, Amy and Zhang, Jason Y and Ramana, Deva and Tulsiani, Shubham},
+    journal={arXiv preprint},
+    year={2023}
+}</code></pre>
+            </div>
+
+            <br><br>
+            <hr><br>
+
+            <h1>Video</h1>
+
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/nd3NRyemyF0" frameBorder="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+            </div>
+
+            <br><br>
+            <hr>
+
+            <h1>Downstream 3D Reconstruction</h1>
+            <br>
+            <div class="flex-direction">
+                <div class="div-half">
+                    <p>Input Sparse Images</p>
+                    <img src="resources/robot.png" width="100%">
+                </div>
+                <div class="div-half">
+                    <p>Predicted Camera Poses</p>
+                    <video autoplay loop muted playsinline controls width="100%">
+                        <source src="resources/robot_15.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="div-half">
+                    <p>Reconstructed Mesh Using <a href="https://jasonyzhang.com/ners/">NeRS</a></p>
+                    <model-viewer class="model" src="./resources/robot.gltf" ar environment-image="neutral"
+                        shadow-intensity="1" camera-controls camera-orbit="180deg 75deg 105%" auto-rotate
+                        camera-controls></model-viewer>
+                </div>
+            </div>
+
+            <br>
+            <hr>
+
+            <h1>Code</h1>
+
+            <br>
+
+            <img src="resources/colab.jpg" width="500px" class="border">
+            <br><br>
+            <div class="links"><a href="https://github.com/amyxlase/relpose-plus-plus">[GitHub]</a></div>
+            <div class="links"><a href="https://github.com/amyxlase/relpose-plus-plus">[Colab]</a></div>
+
+            <hr>
+
+
+            <h1>CO3D Results</h1>
+            <br>
+            <div class="container">
+                <div id="carousel-demo" class="carousel">
+
+                    <div class="item-1">
+                        <table width="400px" class="border">
+                            <tr>
+                                <td>
+                                    <video autoplay loop muted playsinline controls width="100%">
+                                        <source src="resources/co3d_results_cropped/101_11750_20715_S0_N7_30.mp4"
+                                            type="video/mp4">
+                                    </video>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="resources/co3d_results_cropped/101_11750_20715_S0_N7.jpg"
+                                        width="100%"></img>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+
+                    <div class="item-2">
+                        <table width="400px" class="border">
+                            <tr>
+                                <td>
+                                    <video autoplay loop muted playsinline controls width="100%">
+                                        <source src="resources/co3d_results_cropped/101_11754_20739_S0_N7_30.mp4"
+                                            type="video/mp4">
+                                    </video>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="resources/co3d_results_cropped/101_11754_20739_S0_N7.jpg"
+                                        width="100%"></img>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="item-3">
+                        <table width="400px" class="border">
+                            <tr>
+                                <td>
+                                    <video autoplay loop muted playsinline controls width="100%">
+                                        <source src="resources/co3d_results_cropped/34_1490_4763_S0_N4_30.mp4"
+                                            type="video/mp4">
+                                    </video>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="resources/co3d_results_cropped/34_1490_4763_S0_N4.jpg" width="100%"></img>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+
+
+                    <div class="item-4">
+                        <table width="400px" class="border">
+                            <tr>
+                                <td>
+                                    <video autoplay loop muted playsinline controls width="100%">
+                                        <source src="resources/co3d_results_cropped/120_14058_28338_S0_N4_30.mp4"
+                                            type="video/mp4">
+                                    </video>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="resources/co3d_results_cropped/120_14058_28338_S0_N4.jpg"
+                                        width="100%"></img>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+
+                    <div class="item-5">
+                        <table width="400px" class="border">
+                            <tr>
+                                <td>
+                                    <video autoplay loop muted playsinline controls width="100%">
+                                        <source src="resources/co3d_results_cropped/160_17613_33333_S0_N4_30.mp4"
+                                            type="video/mp4">
+                                    </video>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="resources/co3d_results_cropped/160_17613_33333_S0_N4.jpg"
+                                        width="100%"></img>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+
+                    <div class="item-6">
+                        <table width="400px" class="border">
+                            <tr>
+                                <td>
+                                    <video autoplay loop muted playsinline controls width="100%">
+                                        <source src="resources/co3d_results_cropped/187_20190_36737_S0_N7_30.mp4"
+                                            type="video/mp4">
+                                    </video>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="resources/co3d_results_cropped/187_20190_36737_S0_N7.jpg"
+                                        width="100%"></img>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+
+                    <div class="item-7">
+                        <table width="400px" class="border">
+                            <tr>
+                                <td>
+                                    <video autoplay loop muted playsinline controls width="100%">
+                                        <source src="resources/co3d_results_cropped/187_20196_37207_S0_N7_30.mp4"
+                                            type="video/mp4">
+                                    </video>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="resources/co3d_results_cropped/187_20196_37207_S0_N7.jpg"
+                                        width="100%"></img>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+
+                    <div class="item-8">
+                        <table width="400px" class="border">
+                            <tr>
+                                <td>
+                                    <video autoplay loop muted playsinline controls width="100%">
+                                        <source src="resources/co3d_results_cropped/188_20319_36755_S0_N4_30.mp4"
+                                            type="video/mp4">
+                                    </video>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="resources/co3d_results_cropped/188_20319_36755_S0_N4.jpg"
+                                        width="100%"></img>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+
+                    <div class="item-9">
+                        <table width="400px" class="border">
+                            <tr>
+                                <td>
+                                    <video autoplay loop muted playsinline controls width="100%">
+                                        <source src="resources/co3d_results_cropped/189_20388_37651_S0_N4_30.mp4"
+                                            type="video/mp4">
+                                    </video>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="resources/co3d_results_cropped/189_20388_37651_S0_N4.jpg"
+                                        width="100%"></img>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+
+                    <div class="item-10">
+                        <table width="400px" class="border">
+                            <tr>
+                                <td>
+                                    <video autoplay loop muted playsinline controls width="100%">
+                                        <source src="resources/co3d_results_cropped/190_20479_37788_S0_N6_30.mp4"
+                                            type="video/mp4">
+                                    </video>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="resources/co3d_results_cropped/190_20479_37788_S0_N6.jpg"
+                                        width="100%"></img>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+
+                    <div class="item-11">
+                        <table width="400px" class="border">
+                            <tr>
+                                <td>
+                                    <video autoplay loop muted playsinline controls width="100%">
+                                        <source src="resources/co3d_results_cropped/201_21613_43652_S0_N6_30.mp4"
+                                            type="video/mp4">
+                                    </video>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="resources/co3d_results_cropped/201_21613_43652_S0_N6.jpg"
+                                        width="100%"></img>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+
+                    <div class="item-12">
+                        <table width="400px" class="border">
+                            <tr>
+                                <td>
+                                    <video autoplay loop muted playsinline controls width="100%">
+                                        <source src="resources/co3d_results_cropped/252_27050_54275_S0_N4_30.mp4"
+                                            type="video/mp4">
+                                    </video>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="resources/co3d_results_cropped/252_27050_54275_S0_N4.jpg"
+                                        width="100%"></img>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="item-13">
+                        <table width="400px" class="border">
+                            <tr>
+                                <td>
+                                    <video autoplay loop muted playsinline controls width="100%">
+                                        <source src="resources/co3d_results_cropped/112_13277_23636_S0_N7_30.mp4"
+                                            type="video/mp4">
+                                    </video>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="resources/co3d_results_cropped/112_13277_23636_S0_N7.jpg"
+                                        width="100%"></img>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+
+
+                    <div class="item-14">
+                        <table width="400px" class="border">
+                            <tr>
+                                <td>
+                                    <video autoplay loop muted playsinline controls width="100%">
+                                        <source src="resources/co3d_results_cropped/350_36647_68462_S0_N4_30.mp4"
+                                            type="video/mp4">
+                                    </video>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="resources/co3d_results_cropped/350_36647_68462_S0_N4.jpg"
+                                        width="100%"></img>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+
+                    <div class="item-15">
+                        <table width="400px" class="border">
+                            <tr>
+                                <td>
+                                    <video autoplay loop muted playsinline controls width="100%">
+                                        <source src="resources/co3d_results_cropped/415_57123_110212_S0_N6_30.mp4"
+                                            type="video/mp4">
+                                    </video>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="resources/co3d_results_cropped/415_57123_110212_S0_N6.jpg"
+                                        width="100%"></img>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+
+                    <div class="item-16">
+                        <table width="400px" class="border">
+                            <tr>
+                                <td>
+                                    <video autoplay loop muted playsinline controls width="100%">
+                                        <source src="resources/co3d_results_cropped/415_57125_110159_S0_N6_30.mp4"
+                                            type="video/mp4">
+                                    </video>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="resources/co3d_results_cropped/415_57125_110159_S0_N6.jpg"
+                                        width="100%"></img>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+
+                    <div class="item-17">
+                        <table width="400px" class="border">
+                            <tr>
+                                <td>
+                                    <video autoplay loop muted playsinline controls width="100%">
+                                        <source src="resources/co3d_results_cropped/434_61617_120791_S0_N4_30.mp4"
+                                            type="video/mp4">
+                                    </video>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="resources/co3d_results_cropped/434_61617_120791_S0_N4.jpg"
+                                        width="100%"></img>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+
+                    <div class="item-18">
+                        <table width="400px" class="border">
+                            <tr>
+                                <td>
+                                    <video autoplay loop muted playsinline controls width="100%">
+                                        <source src="resources/co3d_results_cropped/575_84755_167725_S0_N4_30.mp4"
+                                            type="video/mp4">
+                                    </video>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="resources/co3d_results_cropped/575_84755_167725_S0_N4.jpg"
+                                        width="100%"></img>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <!-- End Carousel -->
+            </div>
+            <!-- </section> -->
+
+            <br><br>
+            <hr>
+            <h1>Acknowledgements</h1>
+            <p>
+                We would like to thank Samarth Sinha for useful discussion and thank Sudeep Dasari and Helen Jiang for
+                their
+                feedback on drafts of the paper. This work was supported in part by the NSF GFRP (Grant No. DGE1745016),
+                Singapore
+                DSTA, a CISCO gift award, and CMU Argo AI Center for Autonomous Vehicle Research.
+                <a href="https://github.com/jasonyzhang/webpage-template">Webpage Template</a>.
+            </p>
+
+            <br><br>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.3/dist/js/bulma-carousel.min.js"></script>
+        <script>
+            bulmaCarousel.attach('#carousel-demo', {
+                slidesToScroll: 1,
+                slidesToShow: 3,
+                autoplay: false,
+                loop: true,
+            });
+            bulmaCarousel.attach('#carousel-demo2', {
+                slidesToScroll: 1,
+                slidesToShow: 3,
+                autoplay: false,
+                loop: true,
+            });
+        </script>
+</body>
+
+</html>
