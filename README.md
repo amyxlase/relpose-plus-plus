@@ -1,5 +1,13 @@
 # Code for RelPose++
 
+
+
+[[`arXiv`](https://arxiv.org)]
+[[`Colab`](https://colab.research.google.com/drive/1rbaauApqEdgNAzYX5yMn2WnC4yYjspPz?usp=sharing)]
+[[`Project Page`](https://amyxlase.github.io/relpose-plus-plus/)]
+[[`Bibtex`](#citing-relpose++)]
+
+
 ## Setup Dependencies
 
 We recommend using a conda environment to manage dependencies. Install a version of
@@ -18,11 +26,13 @@ Then, follow the directions to install Pytorch3D [here](https://github.com/faceb
 
 ## Run Demo
 
-Download pre-trained weights:
+A Colab notebook is available [here](https://colab.research.google.com/drive/1rbaauApqEdgNAzYX5yMn2WnC4yYjspPz?usp=sharing)
+
+To run locally, first download pre-trained weights:
 ```
 mkdir -p weights
 gdown https://drive.google.com/uc?id=1FGwMqgLXv4R0xMzEKVv3n3Aghn0MQXKY&export=download
-unzip relposepp_weigths.zip -d weights
+unzip relposepp_weights.zip -d weights
 ```
 
 The demo can be run on any image directory with 2-8 images. Each image must be
@@ -72,6 +82,19 @@ Our released model was trained to 800,000 iterations using 8 GPUS (A6000).
 
 
 Pending Items for Code Release: 
-- [ ] Add more example images
-- [ ] Colab Notebook
 - [ ] Evaluation code
+
+
+
+## Citing RelPose++
+
+If you use find this code helpful, please cite:
+
+```BibTeX
+@article{lin2023relposepp,
+    title={RelPose++: Recovering 6D Poses from Sparse-view Observations},
+    author={Lin, Amy and Zhang, Jason Y and Ramana, Deva and Tulsiani, Shubham},
+    journal={arXiv preprint},
+    year={2023}
+}
+```
