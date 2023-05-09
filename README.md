@@ -2,7 +2,7 @@
 
 
 
-[[`arXiv`](https://arxiv.org)]
+[[`arXiv`](https://arxiv.org/abs/2305.04926)]
 [[`Colab`](https://colab.research.google.com/drive/1rbaauApqEdgNAzYX5yMn2WnC4yYjspPz?usp=sharing)]
 [[`Project Page`](https://amyxlase.github.io/relpose-plus-plus/)]
 [[`Bibtex`](#citing-relpose++)]
@@ -93,8 +93,8 @@ If you use find this code helpful, please cite:
 ```BibTeX
 @article{lin2023relposepp,
     title={RelPose++: Recovering 6D Poses from Sparse-view Observations},
-    author={Lin, Amy and Zhang, Jason Y and Ramana, Deva and Tulsiani, Shubham},
-    journal={arXiv preprint},
+    author={Lin, Amy and Zhang, Jason Y and Ramanan, Deva and Tulsiani, Shubham},
+    journal={arXiv preprint arXiv:2305.04926},
     year={2023}
 }
 ```
