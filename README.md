@@ -5,7 +5,7 @@
 [[`arXiv`](https://arxiv.org/abs/2305.04926)]
 [[`Colab`](https://colab.research.google.com/drive/1rbaauApqEdgNAzYX5yMn2WnC4yYjspPz?usp=sharing)]
 [[`Project Page`](https://amyxlase.github.io/relpose-plus-plus/)]
-[[`Bibtex`](#citing-relpose++)]
+[[`Bibtex`](#citing-relpose)]
 
 
 ## Setup Dependencies
