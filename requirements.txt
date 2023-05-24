@@ -3,11 +3,13 @@ black
 dash
 einops
 flake8
+gdown
 ipdb
 isort
 jupyter
 jupyter_dash
 jupyter-resource-usage
+matplotlib
 numpy
 opencv-python
 pandas

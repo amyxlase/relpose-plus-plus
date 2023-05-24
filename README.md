@@ -42,20 +42,27 @@ selecting bounding boxes.
 The bounding boxes can either be extracted automatically from masks or specified in a
 json file.
 
-Running demo with masks:
+Run demo by extracting bounding boxes from masks:
 ```
 python relpose/demo.py  --image_dir examples/robot/images \
     --mask_dir examples/robot/masks --output_path robot.html
 ```
 
-Running demo with specified bounding boxes:
+Run demo using the masked model (ignores background):
+```
+python relpose/demo.py  --image_dir examples/robot/images --model_dir weights/relposepp_masked \
+    --mask_dir examples/robot/masks --output_path robot.html
+```
+
+Run demo with specified bounding boxes:
 ```
 python relpose/demo.py  --image_dir examples/robot/images \
     --bbox_path examples/robot/bboxes.json --output_path robot.html
 ```
 
 The demo will output an html file that can be opened in a browser. The html file will
-display the input images and predicted cameras. An example is shown [here](https://amyxlase.github.io/relpose-plus-plus/robot.html).
+display the input images and predicted cameras. An example is shown 
+[here](https://amyxlase.github.io/relpose-plus-plus/robot.html).
 
 ## Pre-processing CO3D
 
