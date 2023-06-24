@@ -74,6 +74,11 @@ def get_parser():
         action="store_true",
         help="Use AMP for reduced memory (seems to be slightly slower for some reason)",
     )
+    parser.add_argument(
+        "--mask_images",
+        action="store_true",
+        help="Use masks to white out the background.",
+    )
     return parser
 
 
@@ -95,6 +100,8 @@ def generate_name(args):
         name += "_TRFIRST"
     else:
         name += "_TROURS"
+    if args.mask_images:
+        name += "_Masked"
     name += "_DDP"
     return osp.join(args.output_dir, name)
 
@@ -121,6 +128,7 @@ class Trainer(object):
         self.amp = args.use_amp
         self.normalize_cameras = args.normalize_cameras
         self.first_camera_transform = args.first_camera_transform
+        self.mask_images = args.mask_images
 
         self.iteration = 0
         self.epoch = 0
@@ -141,6 +149,7 @@ class Trainer(object):
             normalize_cameras=self.normalize_cameras,
             first_camera_transform=self.first_camera_transform,
             img_size=224,
+            mask_images=self.mask_images,
         )
 
         os.environ["NCCL_DEBUG"] = "INFO"
@@ -261,7 +270,11 @@ class Trainer(object):
                         truth = truth[:, :n]
 
                     # Forward pass
-                    (queries, logits, predicted_translations,) = self.net(
+                    (
+                        queries,
+                        logits,
+                        predicted_translations,
+                    ) = self.net(
                         images=images,
                         gt_rotation=relative_rotations,
                         crop_params=crop_params,
