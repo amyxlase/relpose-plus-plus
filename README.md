@@ -87,11 +87,9 @@ relpose/trainer_ddp.py --batch_size=48 --num_images=8 --random_num_images=true  
 ```
 Our released model was trained to 800,000 iterations using 8 GPUS (A6000).
 
+## Evaluation Directions
 
-Pending Items for Code Release: 
-- [ ] Evaluation code
-
-
+Please refer to [`eval.md`](eval.md) for instructions on running evaluations.
 
 ## Citing RelPose++
 

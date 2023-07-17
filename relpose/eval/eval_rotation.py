@@ -1,7 +1,6 @@
 import json
 import os
 import os.path as osp
-import socket
 
 import numpy as np
 import torch

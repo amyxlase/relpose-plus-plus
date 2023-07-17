@@ -105,7 +105,7 @@ def evaluate_category_translation(
     )
 
     iterable = tqdm(dataset) if use_pbar else dataset
-    f = open(order_path.format(sample_num=sample_num, category=category))
+    f = open(ORDER_PATH.format(sample_num=sample_num, category=category))
     order = json.load(f)
     all_errors = {}
     translation_errors = []

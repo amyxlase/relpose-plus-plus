@@ -18,7 +18,8 @@ ordering.
 
 ### Running evaluations
 
-Evaluations can be run with `eval_driver.py` for any set of configurations, eg:
+Evaluations can be run with [`eval_driver.py`](relpose/eval/eval_driver.py) for any set
+of configurations, eg:
 ```
 python relpose/eval_driver.py --checkpoint_path weights/relposepp --mode pairwise \
     --num_frames 2 --category apple --sample_num 0

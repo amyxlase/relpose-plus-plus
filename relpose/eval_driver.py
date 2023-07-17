@@ -1,7 +1,7 @@
 """
 A few ways to use this script:
 
-- To generate a list of evaluation job commands to run: 
+- To generate a list of evaluation job commands to run:
     python relpose/eval_driver.py --list_jobs --output_text_path [path]
 
 - To read all evaluation results and print a nicely formatted report:
