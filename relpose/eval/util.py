@@ -18,9 +18,9 @@ def compute_angular_error_batch(rotation1, rotation2):
 
 
 def get_dataset(
-    category="banana",
-    split="train",
-    num_images=2,
+    category,
+    num_images,
+    split="test",
     eval_time=True,
     normalize_cameras=False,
     first_camera_transform=False,

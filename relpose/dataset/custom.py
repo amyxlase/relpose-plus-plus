@@ -106,7 +106,6 @@ class CustomDataset(Dataset):
         return self.get_data()
 
     def get_data(self, ids=(0, 1, 2, 3, 4, 5)):
-
         images = [self.images[i] for i in ids]
         bboxes = [self.bboxes[i] for i in ids]
         images_transformed = []

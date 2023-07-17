@@ -11,7 +11,7 @@ from .models import RelPose
 def get_model(
     model_dir,
     device="cuda:0",
-    num_images=2,
+    num_images=8,
 ):
     # Load weights and args
     checkpoint_dir = osp.join(model_dir, "checkpoints")
