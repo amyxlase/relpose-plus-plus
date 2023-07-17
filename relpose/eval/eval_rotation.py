@@ -218,6 +218,32 @@ def evaluate_pairwise(
     return R_pred_rel, []
 
 
+def evaluate_mst(
+    model,
+    images,
+    crop_params=None,
+):
+    num_frames = images.shape[1]
+
+    model.num_queries = 500_000
+
+    best_rots, best_probs = initialize_graph(
+        num_frames,
+        model,
+        images,
+        crop_params=crop_params,
+    )
+    rotations_pred, edges = compute_mst(
+        num_frames=num_frames,
+        best_probs=best_probs,
+        best_rotations=best_rots,
+    )
+
+    R_pred_rel = n_to_np_rotations(num_frames, rotations_pred)
+
+    return R_pred_rel, rotations_pred
+
+
 def evaluate_coordinate_ascent(
     model,
     images,

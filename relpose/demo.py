@@ -111,7 +111,6 @@ def main(image_dir, model_dir, mask_dir, bbox_path, output_path):
         _, hypothesis = evaluate_mst(
             model=model,
             images=batched_images,
-            use_all_features=True,
             crop_params=batched_crop_params,
         )
     R_pred = np.stack(hypothesis)
@@ -127,7 +126,6 @@ def main(image_dir, model_dir, mask_dir, bbox_path, output_path):
         _, hypothesis = evaluate_coordinate_ascent(
             model=model,
             images=batched_images,
-            use_all_features=True,
             crop_params=batched_crop_params,
         )
     R_final = np.stack(hypothesis)
