@@ -121,10 +121,6 @@ def process_poses(co3d_dir, category, output_dir, min_quality):
         if seq_data["viewpoint_quality_score"] > min_quality:
             good_quality_sequences.add(seq_data["sequence_name"])
 
-    cat_dir = f"/home/amyxlase/process_co3d_v2/images/{category}"
-    if not os.path.exists(cat_dir):
-        os.mkdir(cat_dir)
-
     for subset in ["train", "test"]:
         category_data = {}  # {sequence_name: [{filepath, R, T}]}
         for seq_name, frame_number, filepath in subset_lists_data[subset]:
