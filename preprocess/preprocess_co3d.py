@@ -163,14 +163,14 @@ if __name__ == "__main__":
     if args.precompute_bbox:
         for category in categories:
             precompute_bbox(
-                co3d_dir=args.co3d_dir,
+                co3d_dir=args.co3d_v2_dir,
                 category=category,
                 output_dir=args.output_dir,
             )
     else:
         for category in categories:
             process_poses(
-                co3d_dir=args.co3d_dir,
+                co3d_dir=args.co3d_v2_dir,
                 category=category,
                 output_dir=args.output_dir,
                 min_quality=args.min_quality,
